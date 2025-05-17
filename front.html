@@ -1,0 +1,1619 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduLearn</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+  <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body {
+      background: linear-gradient(120deg, #f54990 0%, #1e3a8a 100%);
+      color: #2e2e2e;
+      min-height: 100vh;
+    }
+    /* Glassmorphism and creative effects */
+.glassy-bar {
+  background: rgba(30,58,138,0.85);
+  backdrop-filter: blur(6px);
+  border-bottom: 2px solid #ffd70055;
+  box-shadow: 0 4px 24px #1e3a8a22;
+}
+.glassy-sidebar {
+  background: rgba(245,73,144,0.18);
+  box-shadow: 0 8px 32px rgba(30,58,138,0.13);
+  border: 1.5px solid #ffd70033;
+  backdrop-filter: blur(8px);
+}
+.glassy-card {
+  background: rgba(255,255,255,0.82);
+  border-radius: 22px;
+  border: 2px solid transparent;
+  background-clip: padding-box;
+  box-shadow: 0 8px 32px #f5499022, 0 2px 8px #ffd70033;
+  border-image: linear-gradient(135deg, #ffd700 0%, #f54990 100%) 1;
+  position: relative;
+  overflow: hidden;
+}
+.glassy-card h3 .sparkle {
+  animation: sparkle 1.8s infinite linear;
+  font-size: 1.1em;
+  vertical-align: middle;
+}
+@keyframes sparkle {
+  0%,100% { opacity: 1; filter: blur(0);}
+  50% { opacity: 0.5; filter: blur(2px);}
+}
+.glassy-stat {
+  background: rgba(255,255,255,0.13);
+  border: 1.5px solid #ffd70033;
+  box-shadow: 0 2px 8px #ffd70022;
+}
+.glassy-progress {
+  background: rgba(255,255,255,0.18);
+  border-radius: 20px;
+  box-shadow: 0 2px 8px #ffd70022;
+}
+.glassy-footer {
+  background: rgba(30,58,138,0.85);
+  backdrop-filter: blur(6px);
+  border-top: 2px solid #ffd70055;
+  border-radius: 0 0 20px 20px;
+  margin-top: 40px;
+  padding: 20px 0 10px 0;
+  color: #ffd700;
+}
+.card h3 i, .sidebar-uiverse .logo i {
+  filter: drop-shadow(0 2px 6px #ffd70088);
+}
+.card {
+  border: 2px solid #ffd70033;
+  box-shadow: 0 8px 32px #f5499022, 0 2px 8px #ffd70033;
+  background: rgba(255,255,255,0.92);
+}
+.card:hover {
+  box-shadow: 0 16px 40px #1e3a8a33, 0 4px 16px #ffd70044;
+  border-color: #ffd70088;
+  transform: scale(1.03);
+}
+.flashcard, .flashcard-inner, .flashcard-front, .flashcard-back {
+  border-radius: 18px !important;
+}
+.flashcard {
+  box-shadow: 0 8px 32px #f5499022, 0 2px 8px #ffd70033;
+  border: 2.5px solid #ffd700;
+  background: linear-gradient(135deg, #fff0f6 60%, #ffd70022 100%);
+}
+.flashcard-front {
+  background: linear-gradient(135deg, #f54990 0%, #ffd700 100%);
+  color: #1e3a8a;
+}
+.flashcard-back {
+  background: linear-gradient(135deg, #ffd700 0%, #f54990 100%);
+  color: #fff;
+}
+.quiz-options button.selected {
+  background: linear-gradient(90deg,#43a047 60%,#ffd700 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 0 12px #43a04755;
+}
+.timeline-item {
+  background: linear-gradient(120deg, #ffd70022 0%, #f8faff 100%);
+  border: 2px solid #ffd700;
+  color: #1e3a8a;
+  border-radius: 14px;
+  box-shadow: 0 2px 8px #ffd70022;
+  transition: box-shadow 0.2s, transform 0.2s;
+}
+.timeline-item:hover {
+  box-shadow: 0 8px 24px #ffd70044;
+  transform: translateY(-4px) scale(1.04);
+  z-index: 2;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg,#ffd700 0%,#f54990 100%);
+  border-radius: 8px;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  background: #f8faff;
+}
+    /* End of Glassmorphism and creative effects */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body {
+      background: linear-gradient(120deg, #f54990 0%, #1e3a8a 100%);
+      color: #2e2e2e;
+      min-height: 100vh;
+    }
+    .menu-bar {
+      background: #1e3a8a;
+      color: white;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      letter-spacing: 1px;
+    }
+    .menu-bar h2 { margin: 0; font-size: 2rem; font-weight: 700; }
+    .main-menu-bar {
+      width: 100%;
+      background: rgba(30,58,138,0.92);
+      box-shadow: 0 4px 24px #1e3a8a22;
+      border-bottom: 2px solid #ffd70055;
+      padding: 0 0 18px 0;
+      margin-bottom: 32px;
+      position: relative;
+      z-index: 10;
+    }
+    .main-menu-inner {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 18px 24px 0 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+    .main-menu-inner .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      color: #ffd700;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .menu-stats {
+      display: flex;
+      gap: 32px;
+      font-size: 1.08em;
+      color: #fff;
+      justify-content: center;
+    }
+    .menu-stats i {
+      color: #ffd700;
+      margin-right: 5px;
+    }
+    .menu-categories {
+      display: flex;
+      gap: 18px;
+      margin: 0 0 0 0;
+    }
+    .menu-categories .category {
+      background: rgba(255,255,255,0.10);
+      padding: 10px 18px;
+      border-radius: 15px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: #fff;
+      border: none;
+      outline: none;
+      transition: background 0.2s, color 0.2s;
+    }
+    .menu-categories .category.active,
+    .menu-categories .category:hover {
+      background: #ffd700;
+      color: #1e3a8a;
+    }
+    .menu-progress {
+      width: 320px;
+      margin: 0 auto;
+    }
+    .menu-habits {
+      width: 100%;
+      margin-top: 8px;
+      text-align: center;
+    }
+    .menu-habits #habitList {
+      flex-wrap: wrap;
+    }
+    @media (max-width: 900px) {
+      .main-menu-inner {
+        padding: 10px 2vw 0 2vw;
+        gap: 10px;
+      }
+      .menu-progress {
+        width: 98vw;
+        min-width: 0;
+      }
+      .menu-categories {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .menu-habits #habitList {
+        flex-direction: column;
+        gap: 10px;
+      }
+    }
+    /* Flashcard color theme update for better combination */
+    .flashcard {
+      background: #fff0f6;
+      border-radius: 16px;
+      padding: 0;
+      text-align: center;
+      box-shadow: 0 5px 18px rgba(245,73,144,0.13);
+      cursor: pointer;
+      perspective: 1000px;
+      width: 260px;
+      height: 160px;
+      margin: 0 auto;
+      border: 2px solid #f54990;
+    }
+    .flashcard-inner {
+      transition: transform 0.6s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+      transform-style: preserve-3d;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .flashcard-front, .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 12px;
+      font-size: 1.1em;
+      padding: 0 10px;
+      box-sizing: border-box;
+    }
+    .flashcard-front {
+      background: linear-gradient(135deg, #f54990 0%, #ffd700 100%);
+      color: #1e3a8a;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+    }
+    .flashcard-back {
+      background: linear-gradient(135deg, #ffd700 0%, #f54990 100%);
+      color: #fff;
+      transform: rotateY(180deg);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+    /* Button color tweaks for consistency */
+    .quiz-options button, .retry-btn, .card button, .modal button {
+      margin: 5px 6px 0 0;
+      padding: 10px 15px;
+      border: none;
+      background: #1e3a8a;
+      color: #ffd700;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+    .quiz-options button:hover, .retry-btn:hover, .card button:hover, .modal button:hover {
+      background: #ffd700;
+      color: #1e3a8a;
+    }
+    /* Know/Don't Know button overrides */
+    #knowBtn {
+      background: #43a047;
+      color: #fff;
+    }
+    #knowBtn:hover {
+      background: #388e3c;
+      color: #ffd700;
+    }
+    #dontKnowBtn {
+      background: #e57373;
+      color: #fff;
+    }
+    #dontKnowBtn:hover {
+      background: #c62828;
+      color: #ffd700;
+    }
+    /* Spaced repetition buttons */
+    .card button[onclick^="rateSRCard"] {
+      color: #fff;
+      font-weight: 600;
+    }
+    .card button[onclick^="rateSRCard"]:hover {
+      color: #ffd700;
+    }
+    /* Timeline item color for consistency */
+    .timeline-item {
+      background: #f8faff;
+      border: 2px solid #ffd700;
+      color: #1e3a8a;
+    }
+    .timeline-item:active {
+      opacity: 0.5;
+    }
+    /* Modal and leaderboard color tweaks */
+    .modal {
+      background: #f8faff;
+      color: #1e3a8a;
+    }
+    .leaderboard-item {
+      background: #f8faff;
+      color: #1e3a8a;
+    }
+    .leaderboard-item:hover {
+      background: #ffd70022;
+      color: #1e3a8a;
+    }
+    /* Footer color */
+    footer {
+      background: #1e3a8a;
+      color: #ffd700;
+      border-radius: 0 0 20px 20px;
+      margin-top: 40px;
+      padding: 20px 0 10px 0;
+    }
+
+    /* Flashcard flip animation (already present, but add a shadow pop) */
+    .flashcard-inner {
+      transition: transform 0.6s cubic-bezier(.4,2,.6,1), box-shadow 0.3s;
+      transform-style: preserve-3d;
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+    .flashcard:active .flashcard-inner {
+      box-shadow: 0 8px 32px #ffd70088, 0 2px 8px #1e3a8a33;
+      animation: flashcardPop 0.3s;
+    }
+    @keyframes flashcardPop {
+      0% { transform: scale(1);}
+      60% { transform: scale(1.06);}
+      100% { transform: scale(1);}
+    }
+
+    /* Flashcard entrance animation */
+    .flashcard {
+      animation: fadeInUp 0.7s;
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(40px);}
+      to { opacity: 1; transform: translateY(0);}
+    }
+
+    /* Know/Don't Know button click animation */
+    #knowBtn:active, #dontKnowBtn:active {
+      animation: btnBounce 0.25s;
+    }
+    @keyframes btnBounce {
+      0% {
+      40% { transform: scale(1.12);}
+      100% { transform: scale(1);}
+    }
+
+    /* Quiz option button hover and click animation */
+    .quiz-options button {
+      transition: transform 0.15s, background 0.2s, color 0.2s;
+    }
+    .quiz-options button:hover {
+      transform: translateY(-3px) scale(1.06);
+      box-shadow: 0 4px 16px #ffd70044;
+    }
+    .quiz-options button:active {
+      transform: scale(0.96);
+    }
+
+    /* Card entrance animation for all .card sections */
+    .card {
+      animation: fadeInCard 0.7s;
+    }
+    @keyframes fadeInCard {
+      from { opacity: 0; transform: scale(0.97);}
+      to { opacity: 1; transform: scale(1);}
+    }
+
+    /* Confetti animation for course completion */
+    .confetti {
+      position: absolute;
+      left: 50%; top: 50%;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 2;
+      font-size: 2rem;
+      opacity: 0;
+      animation: confettiPop 0.7s forwards;
+    }
+    @keyframes confettiPop {
+      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.7);}
+      40% { opacity: 1; transform: translate(-50%, -70%) scale(1.2);}
+      100% { opacity: 0; transform: translate(-50%, -120%) scale(0.7);}
+    }
+
+    /* Timeline item drag and hover animation */
+    .timeline-item {
+      transition: box-shadow 0.2s, transform 0.2s;
+      position: relative;
+    }
+    .timeline-item:hover {
+      box-shadow: 0 4px 16px #ffd70044;
+      transform: translateY(-4px) scale(1.03);
+      z-index: 2;
+    }
+    .timeline-item:active {
+      opacity: 0.5;
+      transform: scale(0.97);
+    }
+
+    /* Leaderboard item hover animation */
+    .leaderboard-item {
+      transition: background 0.2s, color 0.2s, transform 0.18s;
+    }
+    .leaderboard-item:hover {
+      background: #ffd70022;
+      color: #1e3a8a;
+      transform: scale(1.03);
+    }
+
+    /* Modal pop-in animation */
+    .modal {
+      animation: modalPop 0.4s;
+    }
+    @keyframes modalPop {
+      from { opacity: 0; transform: scale(0.92);}
+      to { opacity: 1; transform: scale(1);}
+    }
+
+    /* Example: Add a subtle shadow and scale on card hover */
+    .card {
+      transition: box-shadow 0.3s, transform 0.3s;
+    }
+    .card:hover {
+      box-shadow: 0 12px 32px #1e3a8a22, 0 2px 8px #ffd70033;
+      transform: scale(1.025);
+    }
+    /* Animate flashcard flip with Animate.css */
+    .flashcard.animate__animated {
+      z-index: 2;
+    }
+    /* Animate quiz option selection */
+    .quiz-options button.selected {
+      animation: tada 0.7s;
+      background: #43a047 !important;
+      color: #fff !important;
+    }
+    /* Animate course completion */
+    .course-item.completed {
+      animation: animate__animated animate__pulse 0.7s;
+      background: linear-gradient(90deg, #43a047 60%, #ffd700 100%);
+      color: #fff !important;
+      box-shadow: 0 0 18px 0 #43a04755;
+    }
+
+    /* Add these styles to your <style> section */
+    .habit-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 1.05em;
+      cursor: pointer;
+      position: relative;
+      padding-left: 0;
+      user-select: none;
+      transition: background 0.2s;
+      border-radius: 8px;
+      padding: 6px 8px;
+    }
+    .habit-label:hover {
+      background: rgba(255,215,0,0.08);
+    }
+    .habit-label input[type="checkbox"] {
+      opacity: 0;
+      width: 0;
+      height: 0;
+      position: absolute;
+    }
+    .custom-check {
+      width: 22px;
+      height: 22px;
+      border: 2px solid #ffd700;
+      border-radius: 6px;
+      display: inline-block;
+      position: relative;
+      background: #fff;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .habit-label input[type="checkbox"]:checked + .custom-check {
+      background: linear-gradient(135deg,#43a047 60%,#ffd700 100%);
+      border-color: #43a047;
+    }
+    .custom-check:after {
+      content: "";
+      position: absolute;
+      display: none;
+    }
+    .habit-label input[type="checkbox"]:checked + .custom-check:after {
+      display: block;
+    }
+    .habit-label .custom-check:after {
+      left: 6px;
+      top: 2px;
+      width: 6px;
+      height: 12px;
+      border: solid #fff;
+      border-width: 0 3px 3px 0;
+      transform: rotate(45deg);
+      content: "";
+      position: absolute;
+    }
+    .habit-text {
+      color: #fff;
+      font-weight: 500;
+      letter-spacing: 0.2px;
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      transition: color 0.2s;
+    }
+    .habit-label input[type="checkbox"]:checked ~ .habit-text {
+      color: #43a047;
+    }
+
+    /* Increase space between dashboard columns */
+    .dashboard {
+      gap: 40px;
+      padding: 40px 32px 32px 32px;
+      max-width: 1500px;
+    }
+
+    /* Add more space between sidebar sections */
+    .sidebar-uiverse > *:not(:last-child) {
+      margin-bottom: 28px;
+    }
+
+    /* Add more space between cards */
+    .card {
+      margin-bottom: 36px;
+      padding: 32px 32px 28px 32px;
+    }
+
+    /* Add space between card header and content */
+    .card h3 {
+      margin-bottom: 22px;
+    }
+
+    /* Add space between elements inside cards */
+    .card > *:not(:last-child) {
+      margin-bottom: 18px;
+    }
+
+    /* Add space between flashcards and controls */
+    #primaryFlashcardContainer {
+      gap: 28px !important;
+      margin-bottom: 10px;
+    }
+
+    /* Add space between buttons */
+    .card button, .quiz-options button, .retry-btn, .modal button {
+      margin-right: 12px;
+      margin-bottom: 8px;
+    }
+
+    /* Add space between habit checklist items */
+    #habitList {
+      gap: 14px !important;
+      margin-bottom: 18px !important;
+    }
+
+    /* Add space between timeline items */
+    #lessonTimeline {
+      gap: 24px !important;
+      padding: 18px 0 !important;
+    }
+
+    /* Add space between Markdown input and preview */
+    #markdownInput, #markdownPreview {
+      margin-bottom: 0 !important;
+    }
+
+    /* Add space below tables */
+    .card table {
+      margin-bottom: 18px;
+    }
+
+    /* Responsive: add more space on mobile */
+    @media (max-width: 900px) {
+      .dashboard {
+        gap: 18px;
+        padding: 18px 6px 18px 6px;
+      }
+      .card {
+        padding: 18px 8px 16px 8px;
+      }
+    }
+
+    /* Add to your <style> section for sidebar enhancements */
+    .edu-quote {
+      background: rgba(255,255,255,0.18);
+      border-radius: 14px;
+      padding: 16px 14px 12px 14px;
+      margin-bottom: 26px;
+      color: #fff;
+      font-size: 1.04em;
+      font-style: italic;
+      box-shadow: 0 2px 8px rgba(245,73,144,0.08);
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      border-left: 5px solid #ffd700;
+      position: relative;
+    }
+    .edu-quote i {
+      color: #ffd700;
+      font-size: 1.3em;
+      margin-bottom: 4px;
+    }
+    .edu-quote-author {
+      font-size: 0.98em;
+      color: #ffd700;
+      font-style: normal;
+      margin-top: 4px;
+      align-self: flex-end;
+    }
+
+    /* Remove border-radius from flashcard viewer, quiz, and main cards, and align content creatively */
+.glassy-card,
+.card,
+.flashcard,
+.flashcard-inner,
+.flashcard-front,
+.flashcard-back,
+.quiz-options button,
+.retry-btn,
+#primaryFlashcardContainer,
+#quizQuestion,
+#quizOptions,
+#quizScore {
+  border-radius: 0 !important;
+}
+
+/* Remove border-radius from timeline and markdown too for consistency */
+.timeline-item,
+#markdownInput,
+#markdownPreview {
+  border-radius: 0 !important;
+}
+
+/* Flashcard viewer creative alignment */
+#primaryFlashcardContainer {
+  align-items: center;
+  justify-content: center;
+  gap: 32px !important;
+  margin-bottom: 10px;
+  padding: 24px 0 18px 0;
+}
+
+.flashcard {
+  margin: 0 auto;
+  box-shadow: 0 8px 32px #f5499022, 0 2px 8px #ffd70033;
+  border: 2.5px solid #ffd700;
+  background: linear-gradient(135deg, #fff0f6 60%, #ffd70022 100%);
+  border-radius: 0 !important;
+  transition: box-shadow 0.25s, transform 0.25s;
+}
+
+.flashcard:hover {
+  box-shadow: 0 16px 40px #1e3a8a33, 0 4px 16px #ffd70044;
+  transform: scale(1.04);
+}
+
+.flashcard-inner,
+.flashcard-front,
+.flashcard-back {
+  border-radius: 0 !important;
+}
+
+.flashcard-front,
+.flashcard-back {
+  font-size: 1.18em;
+  padding: 0 18px;
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#primaryFlashcardContainer > div[style*="display:flex"] {
+  justify-content: center;
+}
+
+.card {
+  border-radius: 0 !important;
+  margin-bottom: 36px;
+  padding: 32px 32px 28px 32px;
+  box-shadow: 0 8px 32px #f5499022, 0 2px 8px #ffd70033;
+  background: rgba(255,255,255,0.92);
+  transition: box-shadow 0.3s, transform 0.3s;
+}
+
+.card h3 {
+  margin-bottom: 22px;
+  text-align: center;
+  letter-spacing: 0.5px;
+}
+
+.quiz-options {
+  display: flex;
+  justify-content: center;
+  gap: 18px;
+  margin-top: 18px;
+}
+
+.quiz-options button,
+.retry-btn {
+  border-radius: 0 !important;
+  min-width: 110px;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 10px 18px;
+  margin-bottom: 0;
+}
+
+.quiz-score {
+  text-align: center;
+  margin-top: 18px;
+  font-size: 1.08em;
+  color: #1e3a8a;
+}
+
+@media (max-width: 900px) {
+  .card {
+    padding: 18px 8px 16px 8px;
+  }
+  #primaryFlashcardContainer {
+    padding: 12px 0 10px 0;
+  }
+}
+  </style>
+</head>
+<body>
+  <div class="main-menu-bar">
+    <div class="main-menu-inner">
+      <div class="logo"><i class="fas fa-graduation-cap"></i> EduLearn</div>
+      <div class="menu-stats">
+        <span><i class="fas fa-check-circle"></i> <b id="completedPercent">0%</b> Completed</span>
+        <span><i class="fas fa-book"></i> <b id="lessonsCount">0/3</b> Lessons</span>
+        <span><i class="fas fa-clock"></i> <b>12/12</b> Hours</span>
+      </div>
+      <div class="menu-categories" id="categoryList">
+        <button class="category" data-category="ethics" title="Show Ethics flashcards and courses"><i class="fas fa-balance-scale"></i> Ethics</button>
+        <button class="category" data-category="technology" title="Show Technology flashcards and courses"><i class="fas fa-laptop-code"></i> Technology</button>
+        <button class="category" data-category="history" title="Show History flashcards and courses"><i class="fas fa-landmark"></i> History</button>
+      </div>
+      <div class="menu-progress">
+        <div class="progress-bar glassy-progress">
+          <div class="progress" id="progressBar"></div>
+        </div>
+      </div>
+      <div class="menu-habits">
+        <strong style="font-size:1.1em;letter-spacing:0.5px;color:#ffd700;"><i class="fas fa-calendar-check"></i> Daily Habit Checklist</strong>
+        <div id="habitList" style="margin: 12px 0 0 0; display: flex; flex-direction: row; gap: 16px; justify-content: center;">
+          <label class="habit-label">
+            <input type="checkbox" class="habit-checkbox" value="Read 10 pages">
+            <span class="custom-check"></span>
+            <span class="habit-text"><i class="fas fa-book-open"></i> Read 10 pages</span>
+          </label>
+          <label class="habit-label">
+            <input type="checkbox" class="habit-checkbox" value="Practice coding">
+            <span class="custom-check"></span>
+            <span class="habit-text"><i class="fas fa-keyboard"></i> Practice coding</span>
+          </label>
+          <label class="habit-label">
+            <input type="checkbox" class="habit-checkbox" value="Watch a lesson">
+            <span class="custom-check"></span>
+            <span class="habit-text"><i class="fas fa-play-circle"></i> Watch a lesson</span>
+          </label>
+          <label class="habit-label">
+            <input type="checkbox" class="habit-checkbox" value="Take a quiz">
+            <span class="custom-check"></span>
+            <span class="habit-text"><i class="fas fa-question-circle"></i> Take a quiz</span>
+          </label>
+        </div>
+        <div class="progress-bar glassy-progress" style="height:14px;margin-top:10px;">
+          <div class="progress" id="habitProgressBar" style="background:linear-gradient(90deg,#43a047,#ffd700);height:14px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="dashboard">
+    <!-- Main Panel -->
+    <div>
+      <!-- Each card gets a glassy effect and a subtle gradient border -->
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3 style="margin-left: 32px;"><i class="fas fa-book-open"></i> Flashcard Viewer <span class="sparkle">🃏</span></h3>
+        <div id="primaryFlashcardContainer" style="display:flex;flex-direction:column;align-items:center;gap:28px;">
+          <div id="primaryFlashcard" class="flashcard" style="width:260px;height:160px;cursor:pointer;">
+            <div class="flashcard-inner" id="primaryFlashcardInner">
+              <div class="flashcard-front" id="primaryFlashcardFront"></div>
+              <div class="flashcard-back" id="primaryFlashcardBack"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:18px;">
+            <button id="knowBtn" style="background:#43a047;" title="I know this card!">Know</button>
+            <button id="dontKnowBtn" style="background:#e57373;" title="I don't know this card">Don't Know</button>
+          </div>
+          <div id="flashcardProgress" style="margin-top:8px;font-size:1em;color:#1e3a8a;"></div>
+        </div>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-question"></i> Quiz <span class="sparkle">❓</span></h3>
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-score" id="quizScore"></div>
+        <button class="retry-btn" id="retryBtn" style="display:none;" onclick="startQuiz()">Retry Quiz</button>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-brain"></i> Adaptive Quiz <span class="sparkle">🧠</span></h3>
+        <div id="adaptiveQuizSection">
+          <div class="quiz-question" id="adaptiveQuizQuestion"></div>
+          <div class="quiz-options" id="adaptiveQuizOptions"></div>
+          <div class="quiz-score" id="adaptiveQuizScore"></div>
+          <button class="retry-btn" id="adaptiveRetryBtn" style="display:none;" onclick="startAdaptiveQuiz()">Retry Adaptive Quiz</button>
+        </div>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-list"></i> Course Catalog <span class="sparkle">📚</span></h3>
+        <div style="margin-bottom:12px;">
+          <label for="catalogFilter"><strong>Filter by Topic:</strong></label>
+          <select id="catalogFilter" style="margin-left:10px;padding:4px 8px;border-radius:6px;">
+            <option value="all">All</option>
+            <option value="technology">Technology</option>
+            <option value="ethics">Ethics</option>
+            <option value="history">History</option>
+          </select>
+        </div>
+        <table id="catalogTable">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Topic</th>
+              <th>Estimated Time</th>
+              <th>PDF</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Catalog rows will be rendered here -->
+          </tbody>
+        </table>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-book-reader"></i> Reading Log <span class="sparkle">⭐</span></h3>
+        <table id="readingLogTable">
+          <thead>
+            <tr>
+              <th style="cursor:pointer;" onclick="sortReadingLog('title')">Title &#8597;</th>
+              <th style="cursor:pointer;" onclick="sortReadingLog('date')">Date &#8597;</th>
+              <th style="cursor:pointer;" onclick="sortReadingLog('rating')">Rating &#8597;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Reading log rows will be rendered here -->
+          </tbody>
+        </table>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-sticky-note"></i> Markdown Notes <span class="sparkle">📝</span></h3>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <textarea id="markdownInput" style="width:48%;min-width:220px;height:120px;padding:10px;border-radius:8px;border:1px solid #ddd;font-family:monospace;" placeholder="Write your notes in Markdown..."></textarea>
+          <div id="markdownPreview" style="width:48%;min-width:220px;height:120px;padding:10px;border-radius:8px;border:1px solid #ddd;background:#f8faff;overflow:auto;"></div>
+        </div>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-stream"></i> Lesson Timeline Tracker <span class="sparkle">⏳</span></h3>
+        <div id="lessonTimeline" style="display:flex;gap:24px;overflow-x:auto;padding:18px 0;">
+          <!-- Timeline items will be rendered here -->
+        </div>
+        <div id="lessonDescriptions" style="margin-top:18px;">
+          <div id="desc-0" class="lesson-desc" style="display:none;">
+            <b>Intro to JavaScript:</b> Learn the basics of JavaScript, including variables, data types, and simple functions.
+          </div>
+          <div id="desc-1" class="lesson-desc" style="display:none;">
+            <b>UI/UX Basics:</b> Discover the fundamentals of user interface and user experience design for digital products.
+          </div>
+          <div id="desc-2" class="lesson-desc" style="display:none;">
+            <b>Digital Marketing:</b> Explore essential digital marketing concepts such as SEO, content, and social media.
+          </div>
+          <div id="desc-3" class="lesson-desc" style="display:none;">
+            <b>Business Ethics:</b> Understand the importance of ethics in business and how to apply ethical principles.
+          </div>
+          <div id="desc-4" class="lesson-desc" style="display:none;">
+            <b>World History:</b> Get an overview of major events and themes in world history.
+          </div>
+        </div>
+        <div style="font-size:0.95rem;color:#888;margin-top:8px;">Drag lessons to reschedule your learning order. Click a lesson to see its description.</div>
+      </div>
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-clone"></i> Spaced Repetition Flashcards <span class="sparkle">🔁</span></h3>
+        <div id="srFlashcard" style="text-align:center;margin-bottom:12px;"></div>
+        <div style="display:flex;justify-content:center;gap:12px;">
+          <button onclick="rateSRCard(0)" style="background:#e57373;">Again</button>
+          <button onclick="rateSRCard(1)" style="background:#ffd700;color:#1e3a8a;">Hard</button>
+          <button onclick="rateSRCard(2)" style="background:#43a047;">Easy</button>
+        </div>
+        <div id="srStats" style="margin-top:14px;font-size:0.98rem;"></div>
+      </div>
+      <!-- Add this Study Success & Calendar/To-Do section as a new card in your dashboard main panel -->
+      <div class="card glassy-card animate__animated animate__fadeInUp">
+        <h3><i class="fas fa-chart-bar"></i> Study Success & Calendar <span class="sparkle">📅</span></h3>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 32px;">
+          <!-- Study Success Bar Chart -->
+          <div>
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+              <span class="text-xl font-semibold" style="font-size:1.15em;">Study Success</span>
+              <button class="card-btn" style="background:#fff;color:#1e3a8a;border:1px solid #1e3a8a;border-radius:6px;padding:4px 12px;font-weight:600;cursor:pointer;">Learn more</button>
+            </div>
+            <div class="flex items-end gap-1 h-40" style="display:flex;align-items:end;gap:6px;height:160px;" id="studyBarChart"></div>
+            <div class="flex justify-between mt-2 text-sm text-gray-600" style="display:flex;justify-content:space-between;margin-top:8px;font-size:0.95em;color:#888;">
+              <span>Sep</span><span>Oct</span><span>Now</span><span>Dec</span><span>Jan</span><span>Feb</span>
+            </div>
+          </div>
+          <!-- Calendar & To-Do -->
+          <div>
+            <div class="text-xl font-semibold mb-2" style="font-size:1.15em;margin-bottom:10px;">Calendar & To-Do</div>
+            <input type="date" id="studyDate" style="margin-bottom:8px;border-radius:6px;padding:4px 8px;width:100%;">
+            <div style="display:flex;gap:8px;margin-bottom:8px;">
+              <input id="studyTodoInput" placeholder="Add a task" style="flex:1;border-radius:6px;padding:4px 8px;">
+              <button id="addTodoBtn" style="background:#1e3a8a;color:#ffd700;border-radius:6px;padding:4px 16px;font-weight:600;cursor:pointer;">Add</button>
+            </div>
+            <div>
+              <b>Tasks for <span id="studyTodoDate"></span>:</b>
+              <div id="studyTodoList" style="margin-top:6px;font-size:0.98em;"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div> <!-- End of .dashboard -->
+  <footer class="glassy-footer" style="text-align:center;">
+    &copy; 2025 EduLearn. All rights reserved. | Dashboard UI by
+    <a href="https://uiverse.io/" target="_blank" style="color:#2563eb;text-decoration:none;">Uiverse.io</a>
+    | Icons by
+    <a href="https://fontawesome.com/" target="_blank" style="color:#2563eb;text-decoration:none;">Font Awesome</a>
+  </footer>
+  <!-- Place this where you want the React dashboard to appear -->
+<div id="react-study-dashboard"></div>
+  <script>
+// ===== SIDEBAR CATEGORY FILTER FOR COURSES AND FLASHCARDS =====
+function setupSidebarCategoryFilter() {
+  document.querySelectorAll('.category').forEach(cat => {
+    cat.addEventListener('click', function() {
+      document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const selected = this.getAttribute('data-category');
+      // Filter courses
+      document.querySelectorAll('.course-item').forEach(item => {
+        if (item.getAttribute('data-category') === selected) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      // Render flashcards for selected category
+      renderFlashcards(selected);
+    });
+  });
+  // Set the first category as active by default and render its flashcards
+  const firstCategory = document.querySelector('.category');
+  if (firstCategory) {
+    firstCategory.classList.add('active');
+    renderFlashcards(firstCategory.getAttribute('data-category'));
+    // Filter courses for the first category
+    document.querySelectorAll('.course-item').forEach(item => {
+      if (item.getAttribute('data-category') === firstCategory.getAttribute('data-category')) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+}
+
+// ===== SIDEBAR FLASHCARDS RENDER (for the grid, not the primary viewer) =====
+function renderFlashcards(category) {
+  const container = document.getElementById('flashcardsContainer');
+  if (!container) return;
+  container.innerHTML = '';
+  (flashcardsData[category] || []).forEach(card => {
+    const cardDiv = document.createElement('div');
+    cardDiv.className = 'flashcard';
+    cardDiv.onclick = function() { this.classList.toggle('flipped'); };
+    cardDiv.innerHTML = `
+      <div class="flashcard-inner">
+        <div class="flashcard-front"><p>${card.front}</p></div>
+        <div class="flashcard-back"><p>${card.back}</p></div>
+      </div>
+    `;
+    container.appendChild(cardDiv);
+  });
+}
+
+// ===== COURSE PROGRESS AND COMPLETION =====
+const totalCourses = 5;
+let completedCourses = 0;
+function completeCourse(idx) {
+  const btn = document.getElementById('course-btn-' + idx);
+  const item = document.getElementById('course-item-' + idx);
+  if (!btn.classList.contains('completed')) {
+    btn.textContent = 'Completed';
+    btn.classList.add('completed');
+    btn.disabled = true;
+    completedCourses++;
+    updateProgress();
+    item.classList.add('completed', 'animate__animated', 'animate__pulse');
+    // Confetti burst with Anime.js
+    for (let i = 0; i < 12; i++) {
+      const confetti = document.createElement('span');
+      confetti.className = 'confetti';
+      confetti.innerHTML = '🎉';
+      confetti.style.position = 'absolute';
+      confetti.style.left = '50%';
+      confetti.style.top = '50%';
+      confetti.style.fontSize = '1.5rem';
+      confetti.style.pointerEvents = 'none';
+      item.appendChild(confetti);
+      anime({
+        targets: confetti,
+        translateX: anime.random(-80, 80),
+        translateY: anime.random(-60, -120),
+        rotate: anime.random(-90, 90),
+        opacity: [1, 0],
+        duration: 900,
+        easing: 'easeOutCubic',
+        complete: function() { confetti.remove(); }
+      });
+    }
+    setTimeout(() => {
+      item.classList.remove('animate__animated', 'animate__pulse');
+    }, 800);
+  }
+}
+function updateProgress() {
+  const percent = Math.round((completedCourses / totalCourses) * 100);
+  document.getElementById('progressBar').style.width = percent + '%';
+  document.getElementById('completedPercent').textContent = percent + '%';
+  document.getElementById('lessonsCount').textContent = completedCourses + '/' + totalCourses;
+}
+
+// ===== DAILY HABIT CHECKLIST WITH PROGRESS BAR =====
+const habitCheckboxes = document.querySelectorAll('.habit-checkbox');
+function updateHabitProgress() {
+  const habitCheckboxes = document.querySelectorAll('.habit-checkbox');
+  const checked = Array.from(habitCheckboxes).filter(cb => cb.checked).length;
+  const percent = Math.round((checked / habitCheckboxes.length) * 100);
+  document.getElementById('habitProgressBar').style.width = percent + '%';
+}
+
+// ===== PRIMARY FLASHCARD VIEWER =====
+const primaryFlashcards = [
+  { front: "What is AI?", back: "Artificial Intelligence is the simulation of human intelligence in machines." },
+  { front: "Define Machine Learning", back: "Machine Learning is a subset of AI that enables machines to learn from data." },
+  { front: "What is Deep Learning?", back: "Deep Learning is a subset of ML that uses neural networks to analyze data." },
+  { front: "What is Business Ethics?", back: "Business ethics are moral principles that guide the way a business behaves." },
+  { front: "Who was the first President of the USA?", back: "George Washington." }
+];
+let flashcardOrder = [...primaryFlashcards];
+let flashcardKnown = [];
+let flashcardDontKnow = [];
+let flashcardCurrent = 0;
+let flashcardFlipped = false;
+function renderPrimaryFlashcard() {
+  if (!document.getElementById('primaryFlashcardFront')) return;
+  if (flashcardOrder.length === 0) {
+    document.getElementById('primaryFlashcardFront').innerHTML = "<b>All done!</b>";
+    document.getElementById('primaryFlashcardBack').innerHTML = `<b>Known: ${flashcardKnown.length} | Don't Know: ${flashcardDontKnow.length}</b>`;
+    document.getElementById('knowBtn').disabled = true;
+    document.getElementById('dontKnowBtn').disabled = true;
+    document.getElementById('flashcardProgress').textContent = "";
+    document.getElementById('primaryFlashcardInner').style.transform = "";
+
+    // Link flashcard results to quiz score
+    // For example, if all flashcards are known, give a bonus point in the quiz
+    if (typeof quizScore !== "undefined" && typeof quizData !== "undefined") {
+      let bonus = 0;
+      if (flashcardKnown.length === primaryFlashcards.length) {
+        bonus = 1;
+        // Only add the bonus message if not already present
+        const quizScoreDiv = document.getElementById('quizScore');
+        if (!quizScoreDiv.innerHTML.includes('Bonus for mastering flashcards')) {
+          quizScoreDiv.innerHTML += `<br><span style="color:#43a047;font-weight:600;">+1 Bonus for mastering flashcards!</span>`;
+        }
+      }
+      // Optionally, update the quiz score visually (does not affect quiz logic)
+      // quizScoreDiv.textContent = 'Your Score: ' + (quizScore + bonus) + '/' + quizData.length;
+    }
+    return;
+  }
+  const card = flashcardOrder[flashcardCurrent];
+  document.getElementById('primaryFlashcardFront').textContent = card.front;
+  document.getElementById('primaryFlashcardBack').textContent = card.back;
+  document.getElementById('knowBtn').disabled = false;
+  document.getElementById('dontKnowBtn').disabled = false;
+  document.getElementById('primaryFlashcardInner').style.transform = flashcardFlipped ? "rotateY(180deg)" : "";
+  document.getElementById('flashcardProgress').textContent =
+    `Card ${flashcardCurrent + 1} of ${flashcardOrder.length} | Known: ${flashcardKnown.length} | Don't Know: ${flashcardDontKnow.length}`;
+}
+function setupPrimaryFlashcardViewer() {
+  if (document.getElementById('primaryFlashcard')) {
+    document.getElementById('primaryFlashcard').onclick = function() {
+      flashcardFlipped = !flashcardFlipped;
+      const inner = document.getElementById('primaryFlashcardInner');
+      inner.style.transform = flashcardFlipped ? "rotateY(180deg)" : "";
+      // Animate with Animate.css
+      const card = document.getElementById('primaryFlashcard');
+      card.classList.remove('animate__animated', 'animate__flipInY');
+      void card.offsetWidth; // reflow
+      card.classList.add('animate__animated', 'animate__flipInY');
+    };
+    document.getElementById('knowBtn').onclick = function() {
+      flashcardKnown.push(flashcardOrder[flashcardCurrent]);
+      flashcardOrder.splice(flashcardCurrent, 1);
+      if (flashcardCurrent >= flashcardOrder.length) flashcardCurrent = 0;
+      flashcardFlipped = false;
+      renderPrimaryFlashcard();
+      anime({
+        targets: '#progressBar',
+        scaleX: [0.95, 1],
+        duration: 400,
+        easing: 'easeOutElastic(1, .8)'
+      });
+    };
+    document.getElementById('dontKnowBtn').onclick = function() {
+      flashcardDontKnow.push(flashcardOrder[flashcardCurrent]);
+      flashcardOrder.push(flashcardOrder[flashcardCurrent]);
+      flashcardOrder.splice(flashcardCurrent, 1);
+      if (flashcardCurrent >= flashcardOrder.length) flashcardCurrent = 0;
+      flashcardFlipped = false;
+      renderPrimaryFlashcard();
+      anime({
+        targets: '#progressBar',
+        scaleX: [0.95, 1],
+        duration: 400,
+        easing: 'easeOutElastic(1, .8)'
+      });
+    };
+    renderPrimaryFlashcard();
+  }
+}
+
+// ===== QUIZ APP WITH SCORE AND RETRY =====
+const quizData = [
+  {
+    question: "What is the capital of France?",
+    options: ["Paris", "London", "Berlin"],
+    answer: 0
+  },
+  {
+    question: "Which language runs in a web browser?",
+    options: ["Python", "Java", "JavaScript"],
+    answer: 2
+  },
+  {
+    question: "Who designed the first computer algorithm?",
+    options: ["Ada Lovelace", "Alan Turing", "Charles Babbage"],
+    answer: 0
+  }
+];
+let quizIndex = 0;
+let quizScore = 0;
+function startQuiz() {
+  quizIndex = 0;
+  quizScore = 0;
+  document.getElementById('quizScore').textContent = '';
+  document.getElementById('retryBtn').style.display = 'none';
+  showQuizQuestion();
+}
+function showQuizQuestion() {
+  const q = quizData[quizIndex];
+  document.getElementById('quizQuestion').textContent = q.question;
+  const optionsDiv = document.getElementById('quizOptions');
+  optionsDiv.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.textContent = opt;
+    btn.onclick = () => {
+      btn.classList.add('selected');
+      setTimeout(() => selectQuizOption(i), 700);
+    };
+    optionsDiv.appendChild(btn);
+  });
+}
+function selectQuizOption(selected) {
+  if (selected === quizData[quizIndex].answer) quizScore++;
+  quizIndex++;
+  if (quizIndex < quizData.length) {
+    showQuizQuestion();
+  } else {
+    document.getElementById('quizQuestion').textContent = 'Quiz Completed!';
+    document.getElementById('quizOptions').innerHTML = '';
+    document.getElementById('quizScore').textContent = 'Your Score: ' + quizScore + '/' + quizData.length;
+    document.getElementById('retryBtn').style.display = 'inline-block';
+  }
+}
+
+// ===== ADAPTIVE QUIZ LOGIC =====
+const adaptiveQuestions = [
+  // Easy
+  { q: "What is 2 + 2?", options: ["3", "4", "22"], a: 1, level: 1 },
+  { q: "What is 3 + 5?", options: ["58", "8", "33"], a: 1, level: 1 },
+  { q: "What is 5 - 3?", options: ["2", "3", "0"], a: 0, level: 1 },
+  // Medium
+  { q: "What is 12 / 4?", options: ["3", "4", "6"], a: 2, level: 2 },
+  { q: "What is 3 * 5?", options: ["15", "10", "35"], a: 0, level: 2 },
+  { q: "What is 9 - 6?", options: ["3", "6", "0"], a: 0, level: 2 },
+  // Hard
+  { q: "What is 25 * 4?", options: ["100", "20", "75"], a: 0, level: 3 },
+  { q: "What is 144 / 12?", options: ["12", "14", "24"], a: 2, level: 3 },
+  { q: "What is 18 - 9?", options: ["9", "8", "10"], a: 0, level: 3 }
+];
+let adaptiveIndex = 0;
+let adaptiveScore = 0;
+let adaptiveLevel = 1;
+function startAdaptiveQuiz() {
+  adaptiveIndex = 0;
+  adaptiveScore = 0;
+  adaptiveLevel = 1;
+  document.getElementById('adaptiveQuizScore').textContent = '';
+  document.getElementById('adaptiveRetryBtn').style.display = 'none';
+  showAdaptiveQuizQuestion();
+}
+function showAdaptiveQuizQuestion() {
+  const q = adaptiveQuestions.filter(q => q.level === adaptiveLevel);
+  if (adaptiveIndex < q.length) {
+    document.getElementById('adaptiveQuizQuestion').textContent = q[adaptiveIndex].q;
+    const optionsDiv = document.getElementById('adaptiveQuizOptions');
+    optionsDiv.innerHTML = '';
+    q[adaptiveIndex].options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => {
+        btn.classList.add('selected');
+        setTimeout(() => selectAdaptiveOption(i), 700);
+      };
+      optionsDiv.appendChild(btn);
+    });
+  } else {
+    adaptiveLevel++;
+    adaptiveIndex = 0;
+    showAdaptiveQuizQuestion();
+  }
+}
+function selectAdaptiveOption(selected) {
+  const q = adaptiveQuestions.filter(q => q.level === adaptiveLevel - 1);
+  if (selected === q[adaptiveIndex].a) adaptiveScore++;
+  adaptiveIndex++;
+  if (adaptiveIndex < q.length) {
+    showAdaptiveQuizQuestion();
+  } else {
+    document.getElementById('adaptiveQuizQuestion').textContent = 'Adaptive Quiz Completed!';
+    document.getElementById('adaptiveQuizOptions').innerHTML = '';
+    document.getElementById('adaptiveQuizScore').textContent = 'Your Score: ' + adaptiveScore + '/' + adaptiveQuestions.length;
+    document.getElementById('adaptiveRetryBtn').style.display = 'inline-block';
+  }
+}
+
+// ===== CATALOG TABLE RENDERING WITH FILTER =====
+const catalogData = [
+  { title: "JavaScript Basics", topic: "technology", time: "2 hours", pdf: "link-to-pdf" },
+  { title: "Ethics in Business", topic: "ethics", time: "1.5 hours", pdf: "link-to-pdf" },
+  { title: "Digital Marketing 101", topic: "technology", time: "3 hours", pdf: "link-to-pdf" },
+  { title: "Introduction to AI", topic: "technology", time: "2.5 hours", pdf: "link-to-pdf" },
+  { title: "Business Ethics Case Studies", topic: "ethics", time: "1 hour", pdf: "link-to-pdf" },
+  { title: "Advanced JavaScript", topic: "technology", time: "2 hours", pdf: "link-to-pdf" }
+];
+function renderCatalogTable(filter = "all") {
+  const tbody = document.querySelector("#catalogTable tbody");
+  tbody.innerHTML = "";
+  const filteredData = filter === "all" ? catalogData : catalogData.filter(item => item.topic === filter);
+  filteredData.forEach(entry => {
+    tbody.innerHTML += `<tr>
+      <td style="padding:7px 6px;">${entry.title}</td>
+      <td style="padding:7px 6px;">${entry.topic}</td>
+      <td style="padding:7px 6px;">${entry.time}</td>
+      <td style="padding:7px 6px;"><a href="${entry.pdf}" target="_blank" style="color:#1e3a8a;text-decoration:none;">View PDF</a></td>
+    </tr>`;
+  });
+}
+window.renderCatalogTable = renderCatalogTable;
+
+// ===== READING LOG TABLE WITH SORTING =====
+let readingLog = [
+  { title: "JavaScript: The Good Parts", date: "2025-05-10", rating: 5 },
+  { title: "Eloquent JavaScript", date: "2025-05-12", rating: 4 },
+  { title: "You Don’t Know JS", date: "2025-05-14", rating: 5 }
+];
+let readingSortKey = 'title', readingSortAsc = true;
+function renderReadingLogTable() {
+  const tbody = document.querySelector("#readingLogTable tbody");
+  tbody.innerHTML = "";
+  const sorted = [...readingLog].sort((a, b) => {
+    const aVal = a[readingSortKey], bVal = b[readingSortKey];
+    return (aVal > bVal ? 1 : -1) * (readingSortAsc ? 1 : -1);
+  });
+  sorted.forEach(entry => {
+    tbody.innerHTML += `<tr>
+      <td style="padding:7px 6px;">${entry.title}</td>
+      <td style="padding:7px 6px;">${entry.date}</td>
+      <td style="padding:7px 6px;">${renderStars(entry.rating)}</td>
+    </tr>`;
+  });
+}
+function renderStars(rating) {
+  let stars = "";
+  for (let i = 1; i <= 5; i++) {
+    stars += `<i class="fa-star${i <= rating ? " fas" : " far"}" style="color:#ffd700;"></i>`;
+  }
+  return stars;
+}
+function sortReadingLog(key) {
+  if (readingSortKey === key) readingSortAsc = !readingSortAsc;
+  else { readingSortKey = key; readingSortAsc = true; }
+  renderReadingLogTable();
+}
+window.sortReadingLog = sortReadingLog;
+
+// ===== MARKDOWN NOTE EDITOR WITH LIVE PREVIEW =====
+function markdownToHtml(md) {
+  // Simple Markdown to HTML (supports #, ##, **, *, `, links, line breaks)
+  return md
+    .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+    .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+    .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+    .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+    .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+    .replace(/`([^`]+)`/gim, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>')
+    .replace(/\n$/gim, '<br>')
+    .replace(/\n/g, '<br>');
+}
+function setupMarkdownEditor() {
+  if (document.getElementById("markdownInput")) {
+    const mdInput = document.getElementById("markdownInput");
+    const mdPreview = document.getElementById("markdownPreview");
+    mdInput.addEventListener("input", function() {
+      mdPreview.innerHTML = markdownToHtml(this.value);
+    });
+    mdPreview.innerHTML = markdownToHtml(mdInput.value || "# Welcome!\nType some *Markdown* notes here.");
+  }
+}
+
+// ===== TIMELINE-BASED LESSON TRACKER WITH DRAG-TO-RESCHEDULE =====
+let lessons = [
+  { title: "Intro to JavaScript", date: "2025-05-17" },
+  { title: "UI/UX Basics", date: "2025-05-18" },
+  { title: "Digital Marketing", date: "2025-05-19" },
+  { title: "Business Ethics", date: "2025-05-20" },
+  { title: "World History", date: "2025-05-21" }
+];
+function renderTimeline() {
+  const timeline = document.getElementById('lessonTimeline');
+  timeline.innerHTML = '';
+  lessons.forEach((lesson, idx) => {
+    const item = document.createElement('div');
+    item.className = 'timeline-item';
+    item.draggable = true;
+    item.style.background = '#f8faff';
+    item.style.borderRadius = '12px';
+    item.style.padding = '12px 18px';
+    item.style.minWidth = '140px';
+    item.style.boxShadow = '0 2px 8px rgba(30,58,138,0.06)';
+    item.style.textAlign = 'center';
+    item.style.cursor = 'grab';
+    item.style.border = '2px solid #ffd700';
+    item.style.userSelect = 'none';
+    item.innerHTML = `<b>${lesson.title}</b><br><span style="font-size:0.95em;color:#1e3a8a;">${lesson.date}</span>`;
+    item.onclick = () => {
+      // Hide all descriptions
+      document.querySelectorAll('.lesson-desc').forEach(d => d.style.display = 'none');
+      // Show the selected one
+      const desc = document.getElementById('desc-' + idx);
+      if (desc) desc.style.display = 'block';
+    };
+    item.ondragstart = e => {
+      e.dataTransfer.setData('text/plain', idx);
+      item.style.opacity = 0.5;
+    };
+    item.ondragend = () => { item.style.opacity = 1; };
+    item.ondragover = e => e.preventDefault();
+    item.ondrop = e => {
+      e.preventDefault();
+      const from = +e.dataTransfer.getData('text/plain');
+      const to = idx;
+      if (from !== to) {
+        const moved = lessons.splice(from, 1)[0];
+        lessons.splice(to, 0, moved);
+        renderTimeline();
+        // Hide all descriptions after reorder
+        document.querySelectorAll('.lesson-desc').forEach(d => d.style.display = 'none');
+      }
+    };
+    timeline.appendChild(item);
+  });
+}
+
+// ===== SPACED REPETITION FLASHCARD ENGINE WITH REVIEW STATS =====
+let srFlashcards = [
+  { front: "What is a closure in JS?", back: "A closure is a function with preserved data from its lexical scope.", ef: 2.5, interval: 1, due: 0, reps: 0, last: null },
+  { front: "Define UX.", back: "User Experience, how a user interacts with and experiences a product.", ef: 2.5, interval: 1, due: 0, reps: 0, last: null },
+  { front: "What is SEO?", back: "Search Engine Optimization, improving site visibility in search engines.", ef: 2.5, interval: 1, due: 0, reps: 0, last: null }
+];
+let srIndex = 0;
+let srToday = 0;
+function nextSRCard() {
+  // Find next due card (simulate today as 0)
+  srToday = 0;
+  srIndex = srFlashcards.findIndex(card => card.due <= srToday);
+  if (srIndex === -1) {
+    document.getElementById('srFlashcard').innerHTML = "<b>All reviews done for today!</b>";
+    document.getElementById('srStats').textContent = `Total cards: ${srFlashcards.length}`;
+    return;
+  }
+  const card = srFlashcards[srIndex];
+  document.getElementById('srFlashcard').innerHTML = `
+    <div style="font-size:1.1em;margin-bottom:8px;"><b>Q:</b> ${card.front}</div>
+    <button onclick="showSRBack()" style="background:#1e3a8a;color:#fff;border:none;border-radius:8px;padding:6px 16px;">Show Answer</button>
+    <div id="srBack" style="margin-top:10px;display:none;"><b>A:</b> ${card.back}</div>
+  `;
+  document.getElementById('srStats').textContent = `Card ${srIndex + 1} of ${srFlashcards.length} | Reviews: ${card.reps}`;
+}
+function showSRBack() {
+  document.getElementById('srBack').style.display = '';
+}
+function rateSRCard(grade) {
+  // grade: 0=Again, 1=Hard, 2=Easy
+  const card = srFlashcards[srIndex];
+  card.reps++;
+  // SM-2 algorithm (simplified)
+  if (grade === 0) {
+    card.interval = 1;
+    card.ef = Math.max(1.3, card.ef - 0.2);
+  } else if (grade === 1) {
+    card.interval = Math.max(1, Math.round(card.interval * card.ef * 0.7));
+    card.ef = Math.max(1.3, card.ef - 0.15);
+  } else {
+    card.interval = Math.round(card.interval * card.ef);
+    card.ef = Math.min(2.5, card.ef + 0.1);
+  }
+  card.due = srToday + card.interval;
+  card.last = new Date().toISOString().slice(0, 10);
+  nextSRCard();
+}
+window.showSRBack = showSRBack;
+window.rateSRCard = rateSRCard;
+
+// ===== COURSE NOTE TOGGLE (SHOW/HIDE) =====
+function toggleCourseNote(idx) {
+  const note = document.getElementById('note-' + idx);
+
+  const arrow = document.getElementById('arrow-' + idx);
+  if (note.style.display === 'none' || note.style.display === '') {
+    note.style.display = 'block';
+    note.classList.remove('animate__fadeOutUp');
+    note.classList.add('animate__fadeInDown');
+    arrow.style.transform = 'rotate(180deg)';
+  } else {
+    note.classList.remove('animate__fadeInDown');
+    note.classList.add('animate__fadeOutUp');
+    setTimeout(() => { note.style.display = 'none'; }, 400);
+    arrow.style.transform = '';
+  }
+}
+window.toggleCourseNote = toggleCourseNote;
+
+// ===== INITIALIZATION =====
+document.addEventListener('DOMContentLoaded', function() {
+  setupSidebarCategoryFilter();
+  updateProgress();
+  habitCheckboxes.forEach(cb => cb.addEventListener('change', updateHabitProgress));
+  updateHabitProgress();
+  setupPrimaryFlashcardViewer();
+  if (document.getElementById('quizQuestion')) startQuiz();
+  if (document.getElementById('adaptiveQuizQuestion')) startAdaptiveQuiz();
+  if (document.getElementById("catalogFilter")) {
+    document.getElementById("catalogFilter").addEventListener("change", function() {
+      renderCatalogTable(this.value);
+    });
+    renderCatalogTable();
+  }
+  renderReadingLogTable();
+  setupMarkdownEditor();
+  renderTimeline();
+  nextSRCard();
+});
+
+// Study Success Bar Chart
+const studyData = [12, 11, 10, 9, 9, 10, 11, 13, 15, 16, 18, 19, 20, 21, 23, 22, 21, 22, 23, 24, 25, 25];
+const barChart = document.getElementById("studyBarChart");
+if (barChart) {
+  barChart.innerHTML = "";
+  studyData.forEach(val => {
+    const bar = document.createElement("div");
+    bar.style.height = (val * 5) + "px";
+    bar.style.width = "8px";
+    bar.style.background = "linear-gradient(135deg,#1e3a8a,#f54990)";
+    bar.style.borderRadius = "6px";
+    bar.style.marginRight = "2px";
+    barChart.appendChild(bar);
+  });
+}
+
+// Calendar & To-Do
+let studyTodos = {};
+const studyDateInput = document.getElementById("studyDate");
+const studyTodoInput = document.getElementById("studyTodoInput");
+const studyTodoList = document.getElementById("studyTodoList");
+const studyTodoDate = document.getElementById("studyTodoDate");
+function renderStudyTodos() {
+  const dateKey = studyDateInput.value || new Date().toISOString().slice(0,10);
+  studyTodoDate.textContent = new Date(dateKey).toDateString();
+  studyTodoList.innerHTML = "";
+  (studyTodos[dateKey] || []).forEach((todo, idx) => {
+    const todoDiv = document.createElement("div");
+    todoDiv.className = "todo-item";
+    todoDiv.draggable = true;
+    todoDiv.style.padding = "10px 12px";
+    todoDiv.style.borderRadius = "8px";
+    todoDiv.style.marginBottom = "8px";
+    todoDiv.style.background = "#fff";
+    todoDiv.style.boxShadow = "0 2px 4px rgba(0,0,0,0.1)";
+    todoDiv.style.cursor = "grab";
+    todoDiv.style.display = "flex";
+    todoDiv.style.alignItems = "center";
+    todoDiv.style.justifyContent = "space-between";
+    todoDiv.style.userSelect = "none";
+    todoDiv.innerHTML = `
+      <span style="flex-grow: 1; color: #1e3a8a; font-weight: 500;">${todo}</span>
+      <button class="todo-remove" onclick="removeTodo('${dateKey}', ${idx})" style="background:none;border:none;color:#e57373;cursor:pointer;">
+        <i class="fas fa-trash"></i>
+      </button>
+    `;
+    todoDiv.ondragstart = e => {
+      e.dataTransfer.setData('text/plain', idx);
+      todoDiv.style.opacity = 0.5;
+    };
+    todoDiv.ondragend = () => { todoDiv.style.opacity = 1; };
+    todoDiv.ondragover = e => e.preventDefault();
+    todoDiv.ondrop = e => {
+      e.preventDefault();
+      const from = +e.dataTransfer.getData('text/plain');
+      const to = idx;
+      if (from !== to) {
+        const moved = studyTodos[dateKey].splice(from, 1)[0];
+        studyTodos[dateKey].splice(to, 0, moved);
+        renderStudyTodos();
+      }
+    };
+    studyTodoList.appendChild(todoDiv);
+  });
+}
+function addTodo() {
+  const dateKey = studyDateInput.value || new Date().toISOString().slice(0,10);
+  const todoText = studyTodoInput.value.trim();
+  if (!todoText) return;
+  if (!studyTodos[dateKey]) studyTodos[dateKey] = [];
+  studyTodos[dateKey].push(todoText);
+  studyTodoInput.value = "";
+  renderStudyTodos();
+}
+function removeTodo(date, idx) {
+  if (studyTodos[date]) {
+    studyTodos[date].splice(idx, 1);
+    if ( studyTodos[date].length === 0) delete studyTodos[date];
+    renderStudyTodos();
+  }
+}
+if (studyDateInput) {
+  studyDateInput.value = new Date().toISOString().slice(0,10);
+  studyDateInput.addEventListener("change", renderStudyTodos);
+  document.getElementById("addTodoBtn").addEventListener("click", addTodo);
+  renderStudyTodos();
+}
+  </script>
+</body>
+</html>
