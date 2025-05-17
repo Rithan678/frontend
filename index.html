@@ -1,0 +1,1082 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EduLearn Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+    body {
+      background: linear-gradient(120deg, #f54990 0%, #1e3a8a 100%);
+      color: #2e2e2e;
+      min-height: 100vh;
+    }
+    .menu-bar {
+      background: #1e3a8a;
+      color: white;
+      padding: 1.2rem 2rem;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.08);
+      letter-spacing: 1px;
+    }
+    .menu-bar h2 { margin: 0; font-size: 2rem; font-weight: 700; }
+    .dashboard {
+      display: grid;
+      grid-template-columns: 25% 50% 25%;
+      gap: 28px;
+      padding: 32px 24px 24px 24px;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .sidebar-uiverse {
+      background: linear-gradient(135deg, #f54990 0%, #1e3a8a 100%);
+      border-radius: 24px;
+      padding: 28px 20px 24px 20px;
+      min-height: 80vh;
+      box-shadow: 0 8px 32px rgba(30,58,138,0.10);
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      color: #fff;
+    }
+    .sidebar-uiverse .logo {
+      font-size: 1.7rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sidebar-uiverse .logo i { color: #ffd700; font-size: 2rem; }
+    .sidebar-uiverse .stat-box {
+      background: rgba(255,255,255,0.13);
+      border-radius: 14px;
+      padding: 14px 0 10px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 18px;
+      box-shadow: 0 2px 8px rgba(30,58,138,0.04);
+    }
+    .sidebar-uiverse .stat-box i { color: #ffd700; font-size: 1.5rem; margin-bottom: 6px; }
+    .sidebar-uiverse .stat-label { font-size: 0.95rem; color: #ffd700; margin-bottom: 2px; }
+    .sidebar-uiverse .stat-value { font-weight: bold; font-size: 1.1rem; color: #fff; }
+    .sidebar-uiverse .categories {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      margin-bottom: 24px;
+    }
+    .sidebar-uiverse .category {
+      background: rgba(255,255,255,0.10);
+      padding: 10px 15px;
+      border-radius: 15px;
+      font-size: 15px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      color: #fff;
+      transition: background 0.2s, color 0.2s;
+      border: none;
+      outline: none;
+    }
+    .sidebar-uiverse .category.active,
+    .sidebar-uiverse .category:hover {
+      background: #ffd700;
+      color: #1e3a8a;
+    }
+    .sidebar-uiverse .courses-list { margin-top: 18px; }
+    .sidebar-uiverse .course-item {
+      display: flex;
+      align-items: center;
+      background: rgba(255,255,255,0.10);
+      border-radius: 10px;
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      color: #fff;
+    }
+    .sidebar-uiverse .course-item i { font-size: 1.3rem; margin-right: 12px; color: #ffd700; }
+    .sidebar-uiverse .course-title { flex: 1; }
+    .sidebar-uiverse .course-status button {
+      background: #ffd700;
+      color: #1e3a8a;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 12px;
+      cursor: pointer;
+      font-weight: 600;
+      transition: background 0.2s;
+    }
+    .sidebar-uiverse .course-status button.completed {
+      background: #43a047;
+      color: #fff;
+    }
+    .sidebar-uiverse .course-status button:disabled {
+      opacity: 0.7;
+      cursor: default;
+    }
+    .sidebar-uiverse .progress-bar {
+      background: rgba(255,255,255,0.15);
+      height: 10px;
+      border-radius: 20px;
+      margin: 10px 0;
+      position: relative;
+    }
+    .sidebar-uiverse .progress {
+      height: 10px;
+      border-radius: 20px;
+      background: #ffd700;
+      width: 0%;
+      transition: width 0.5s;
+    }
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 24px 24px 20px 24px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 24px;
+    }
+    .card h3 { margin-bottom: 18px; color: #1e3a8a; font-size: 1.25rem; }
+    .flashcard {
+      background: #fff;
+      border-radius: 12px;
+      padding: 0;
+      text-align: center;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+      cursor: pointer;
+      perspective: 1000px;
+      width: 260px;
+      height: 160px;
+      margin: 0 auto;
+    }
+    .flashcard-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.6s;
+    }
+    .flashcard.flipped .flashcard-inner,
+    #primaryFlashcardInner[style*="rotateY(180deg)"] {
+      transform: rotateY(180deg);
+    }
+    .flashcard-front, .flashcard-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 12px;
+      font-size: 1.1em;
+      padding: 0 10px;
+    }
+    .flashcard-front { background: #4a90e2; color: white; }
+    .flashcard-back { background: #357ab8; color: white; transform: rotateY(180deg);}
+    .quiz-options button, .retry-btn, .card button, .modal button {
+      margin: 5px 6px 0 0;
+      padding: 10px 15px;
+      border: none;
+      background: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background 0.2s;
+    }
+    .quiz-options button:hover, .retry-btn:hover, .card button:hover, .modal button:hover { background: #357ab8; }
+    .quiz-score { margin-top: 15px; font-weight: bold; }
+    .progress-bar {
+      background: #eee;
+      height: 10px;
+      border-radius: 20px;
+      margin: 10px 0;
+      position: relative;
+      width: 100%;
+    }
+    .progress {
+      height: 10px;
+      border-radius: 20px;
+      background: #43a047;
+      width: 0%;
+      transition: width 0.5s;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th, td { padding: 8px 6px; text-align: left; }
+    th { background: #f5f5fa; }
+    tr:nth-child(even) { background: #f8faff; }
+    .leaderboard-item {
+      display: flex;
+      justify-content: space-between;
+      margin: 5px 0;
+      background: #f8faff;
+      padding: 10px;
+      border-radius: 12px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .leaderboard-item:hover { background: #ffd70022; }
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.4);
+      z-index: 1000;
+    }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff;
+      padding: 24px 20px;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+      z-index: 1001;
+      width: 300px;
+      text-align: center;
+    }
+    .modal h4 { margin-bottom: 10px; }
+    .modal p { margin: 5px 0; }
+    .modal button {
+      margin-top: 10px;
+      padding: 10px 15px;
+      border: none;
+      background: #4a90e2;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .modal button:hover { background: #357ab8; }
+    footer {
+      text-align: center;
+      color: #888;
+      font-size: 0.95rem;
+      margin: 40px 0 10px 0;
+      padding-top: 20px;
+    }
+    .timeline-item:active { opacity: 0.5; }
+    @media (max-width: 1100px) {
+      .dashboard { grid-template-columns: 1fr; }
+      .sidebar-uiverse, .card { margin-bottom: 24px; }
+    }
+    @media (max-width: 700px) {
+      .dashboard { padding: 10px; }
+      .card { padding: 12px 6px; }
+      .sidebar-uiverse { padding: 16px 8px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="menu-bar">
+    <h2>EduLearn Dashboard</h2>
+  </div>
+  <div class="dashboard">
+    <!-- Sidebar -->
+    <div class="sidebar-uiverse">
+      <div class="logo"><i class="fas fa-graduation-cap"></i> EduLearn</div>
+      <div class="stat-box">
+        <i class="fas fa-check-circle"></i>
+        <div class="stat-label">Completed</div>
+        <div class="stat-value" id="completedPercent">0%</div>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-book"></i>
+        <div class="stat-label">Lessons</div>
+        <div class="stat-value" id="lessonsCount">0/3</div>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-clock"></i>
+        <div class="stat-label">Hours</div>
+        <div class="stat-value">12/12</div>
+      </div>
+      <div class="stat-box">
+        <i class="fas fa-star"></i>
+        <div class="stat-label">Today's Marks</div>
+        <div class="stat-value" id="todaysMarks">0</div>
+      </div>
+      <h4 style="margin:18px 0 8px 0;">Categories</h4>
+      <div class="categories" id="categoryList">
+        <div class="category" data-category="ethics"><i class="fas fa-balance-scale"></i> Ethics</div>
+        <div class="category" data-category="technology"><i class="fas fa-laptop-code"></i> Technology</div>
+        <div class="category" data-category="history"><i class="fas fa-landmark"></i> History</div>
+      </div>
+      <div class="courses-list" id="coursesList">
+        <h4 style="color:#ffd700;margin:18px 0 10px 0;"><i class="fas fa-globe"></i> Online Courses</h4>
+        <div class="course-item" data-category="technology">
+          <i class="fas fa-code"></i>
+          <span class="course-title">JavaScript Basics</span>
+          <span class="course-status"><button onclick="completeCourse(0)" id="course-btn-0">Mark as Done</button></span>
+        </div>
+        <div class="course-item" data-category="technology">
+          <i class="fas fa-paint-brush"></i>
+          <span class="course-title">UI/UX Design Principles</span>
+          <span class="course-status"><button onclick="completeCourse(1)" id="course-btn-1">Mark as Done</button></span>
+        </div>
+        <div class="course-item" data-category="technology">
+          <i class="fas fa-bullhorn"></i>
+          <span class="course-title">Digital Marketing 101</span>
+          <span class="course-status"><button onclick="completeCourse(2)" id="course-btn-2">Mark as Done</button></span>
+        </div>
+        <div class="course-item" data-category="ethics">
+          <i class="fas fa-users"></i>
+          <span class="course-title">Business Ethics</span>
+          <span class="course-status"><button onclick="completeCourse(3)" id="course-btn-3">Mark as Done</button></span>
+        </div>
+        <div class="course-item" data-category="history">
+          <i class="fas fa-landmark"></i>
+          <span class="course-title">World History Overview</span>
+          <span class="course-status"><button onclick="completeCourse(4)" id="course-btn-4">Mark as Done</button></span>
+        </div>
+      </div>
+      <div style="margin-top:20px;">
+        <strong>Progress</strong>
+        <div class="progress-bar">
+          <div class="progress" id="progressBar"></div>
+        </div>
+      </div>
+      <div style="margin-top:28px;">
+        <strong>Daily Habit Checklist</strong>
+        <div id="habitList" style="margin: 12px 0 8px 0;">
+          <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <input type="checkbox" class="habit-checkbox" value="Read 10 pages"> Read 10 pages
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <input type="checkbox" class="habit-checkbox" value="Practice coding"> Practice coding
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+            <input type="checkbox" class="habit-checkbox" value="Watch a lesson"> Watch a lesson
+          </label>
+          <label style="display:flex;align-items:center;gap:8px;">
+            <input type="checkbox" class="habit-checkbox" value="Take a quiz"> Take a quiz
+          </label>
+        </div>
+        <div class="progress-bar">
+          <div class="progress" id="habitProgressBar" style="background:#43a047;"></div>
+        </div>
+      </div>
+    </div>
+    <!-- Main Panel -->
+    <div>
+      <!-- Flashcard Viewer -->
+      <div class="card">
+        <h3><i class="fas fa-book-open"></i> Flashcard Viewer</h3>
+        <div id="primaryFlashcardContainer" style="display:flex;flex-direction:column;align-items:center;gap:18px;">
+          <div id="primaryFlashcard" class="flashcard" style="width:260px;height:160px;cursor:pointer;">
+            <div class="flashcard-inner" id="primaryFlashcardInner">
+              <div class="flashcard-front" id="primaryFlashcardFront"></div>
+              <div class="flashcard-back" id="primaryFlashcardBack"></div>
+            </div>
+          </div>
+          <div style="display:flex;gap:18px;">
+            <button id="knowBtn" style="background:#43a047;">Know</button>
+            <button id="dontKnowBtn" style="background:#e57373;">Don't Know</button>
+          </div>
+          <div id="flashcardProgress" style="margin-top:8px;font-size:1em;color:#1e3a8a;"></div>
+        </div>
+      </div>
+
+      <!-- Quiz App -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-question"></i> Quiz</h3>
+        <div class="quiz-question" id="quizQuestion"></div>
+        <div class="quiz-options" id="quizOptions"></div>
+        <div class="quiz-score" id="quizScore"></div>
+        <button class="retry-btn" id="retryBtn" style="display:none;" onclick="startQuiz()">Retry Quiz</button>
+      </div>
+
+      <!-- Adaptive Quiz -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-brain"></i> Adaptive Quiz</h3>
+        <div id="adaptiveQuizSection">
+          <div class="quiz-question" id="adaptiveQuizQuestion"></div>
+          <div class="quiz-options" id="adaptiveQuizOptions"></div>
+          <div class="quiz-score" id="adaptiveQuizScore"></div>
+          <button class="retry-btn" id="adaptiveRetryBtn" style="display:none;" onclick="startAdaptiveQuiz()">Retry Adaptive Quiz</button>
+        </div>
+      </div>
+
+      <!-- Course Catalog -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-list"></i> Course Catalog</h3>
+        <div style="margin-bottom:12px;">
+          <label for="catalogFilter"><strong>Filter by Topic:</strong></label>
+          <select id="catalogFilter" style="margin-left:10px;padding:4px 8px;border-radius:6px;">
+            <option value="all">All</option>
+            <option value="technology">Technology</option>
+            <option value="ethics">Ethics</option>
+            <option value="history">History</option>
+          </select>
+        </div>
+        <table id="catalogTable">
+          <thead>
+            <tr>
+              <th>Course</th>
+              <th>Topic</th>
+              <th>Estimated Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Catalog rows will be rendered here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Reading Log -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-book-reader"></i> Reading Log</h3>
+        <table id="readingLogTable">
+          <thead>
+            <tr>
+              <th style="cursor:pointer;" onclick="sortReadingLog('title')">Title &#8597;</th>
+              <th style="cursor:pointer;" onclick="sortReadingLog('date')">Date &#8597;</th>
+              <th style="cursor:pointer;" onclick="sortReadingLog('rating')">Rating &#8597;</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Reading log rows will be rendered here -->
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Markdown Notes -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-sticky-note"></i> Markdown Notes</h3>
+        <div style="display:flex;gap:20px;flex-wrap:wrap;">
+          <textarea id="markdownInput" style="width:48%;min-width:220px;height:120px;padding:10px;border-radius:8px;border:1px solid #ddd;font-family:monospace;" placeholder="Write your notes in Markdown..."></textarea>
+          <div id="markdownPreview" style="width:48%;min-width:220px;height:120px;padding:10px;border-radius:8px;border:1px solid #ddd;background:#f8faff;overflow:auto;"></div>
+        </div>
+      </div>
+
+      <!-- Interactive Video -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-video"></i> Interactive Video</h3>
+        <video id="interactiveVideo" width="100%" controls style="border-radius:12px;">
+          <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+        </video>
+        <div style="margin-top:12px;">
+          <strong>Comments:</strong>
+          <div id="videoComments" style="max-height:120px;overflow:auto;margin-bottom:8px;"></div>
+          <form id="commentForm" style="display:flex;gap:8px;">
+            <input type="text" id="commentText" placeholder="Add a comment..." style="flex:1;padding:6px 8px;border-radius:6px;border:1px solid #ddd;">
+            <button type="submit" style="background:#1e3a8a;color:#fff;border:none;border-radius:6px;padding:6px 14px;cursor:pointer;">Add</button>
+          </form>
+        </div>
+      </div>
+
+      <!-- Timeline-based Lesson Tracker -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-stream"></i> Lesson Timeline Tracker</h3>
+        <div id="lessonTimeline" style="display:flex;gap:16px;overflow-x:auto;padding:10px 0;">
+          <!-- Timeline items will be rendered here -->
+        </div>
+        <div style="font-size:0.95rem;color:#888;margin-top:8px;">Drag lessons to reschedule your learning order.</div>
+      </div>
+
+      <!-- Spaced Repetition Flashcards -->
+      <div class="card" style="margin-top:24px;">
+        <h3><i class="fas fa-clone"></i> Spaced Repetition Flashcards</h3>
+        <div id="srFlashcard" style="text-align:center;margin-bottom:12px;"></div>
+        <div style="display:flex;justify-content:center;gap:12px;">
+          <button onclick="rateSRCard(0)" style="background:#e57373;">Again</button>
+          <button onclick="rateSRCard(1)" style="background:#ffd700;color:#1e3a8a;">Hard</button>
+          <button onclick="rateSRCard(2)" style="background:#43a047;">Easy</button>
+        </div>
+        <div id="srStats" style="margin-top:14px;font-size:0.98rem;"></div>
+      </div>
+    </div>
+    <!-- Right Panel: Study Success Chart -->
+    <div>
+      <div class="card" style="background:#e6f6fb; border-radius:12px; padding:20px; width:340px; box-shadow:0 2px 6px rgba(0,0,0,0.1); min-width:250px;">
+        <div class="card-header" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <h3 style="margin:0;font-size:16px;">Study Success</h3>
+          <button class="learn-more" style="background:none;border:1px solid #0077b6;padding:4px 10px;border-radius:20px;color:#0077b6;font-size:12px;cursor:pointer;">Learn more</button>
+        </div>
+        <div class="chart" id="studySuccessChart" style="display:flex;align-items:flex-end;height:100px;gap:4px;margin-top:20px;"></div>
+        <div class="labels" style="display:flex;justify-content:space-between;margin-top:10px;font-size:12px;color:#555;">
+          <span>Sep</span>
+          <span>Oct</span>
+          <span style="font-weight:bold;">Now</span>
+          <span>Dec</span>
+          <span>Jan</span>
+          <span>Feb</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Modal for Leaderboard User Info -->
+  <div class="modal-overlay" id="modalOverlay" onclick="closeModal()"></div>
+  <div class="modal" id="userModal">
+    <h4 id="userName"></h4>
+    <p><strong>Score:</strong> <span id="userScore"></span></p>
+    <p id="userDescription"></p>
+    <button onclick="closeModal()">Close</button>
+  </div>
+  <footer>
+    &copy; 2025 EduLearn. All rights reserved. | Dashboard UI by <a href="https://uiverse.io/" target="_blank" style="color:#2563eb;text-decoration:none;">Uiverse.io</a> | Icons by <a href="https://fontawesome.com/" target="_blank" style="color:#2563eb;text-decoration:none;">Font Awesome</a>
+  </footer>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+  <script>
+    const flashcardsData = {
+      technology: [
+        { front: "What is AI?", back: "Artificial Intelligence is the simulation of human intelligence in machines." },
+        { front: "Define Machine Learning", back: "Machine Learning is a subset of AI that enables machines to learn from data." },
+        { front: "What is Deep Learning?", back: "Deep Learning is a subset of ML that uses neural networks to analyze data." }
+      ],
+      ethics: [
+        { front: "What is Business Ethics?", back: "Business ethics are moral principles that guide the way a business behaves." },
+        { front: "Why is integrity important?", back: "Integrity builds trust and credibility in professional and personal relationships." }
+      ],
+    history: [
+      { front: "Who was the first President of the USA?", back: "George Washington." },
+      { front: "What year did World War II end?", back: "1945." }
+    ]
+  };
+
+  // --- Sidebar Category Filter for Courses and Flashcards ---
+  document.querySelectorAll('.category').forEach(cat => {
+    cat.addEventListener('click', function() {
+      document.querySelectorAll('.category').forEach(c => c.classList.remove('active'));
+      this.classList.add('active');
+      const selected = this.getAttribute('data-category');
+      // Filter courses
+      document.querySelectorAll('.course-item').forEach(item => {
+        if (item.getAttribute('data-category') === selected) {
+          item.style.display = '';
+        } else {
+          item.style.display = 'none';
+        }
+      });
+      // Render flashcards for selected category
+      renderFlashcards(selected);
+    });
+  });
+  // Set the first category as active by default and render its flashcards
+  const firstCategory = document.querySelector('.category');
+  if (firstCategory) {
+    firstCategory.classList.add('active');
+    renderFlashcards(firstCategory.getAttribute('data-category'));
+    // Filter courses for the first category
+    document.querySelectorAll('.course-item').forEach(item => {
+      if (item.getAttribute('data-category') === firstCategory.getAttribute('data-category')) {
+        item.style.display = '';
+      } else {
+        item.style.display = 'none';
+      }
+    });
+  }
+
+  // --- Sidebar Flashcards Render (for the grid, not the primary viewer) ---
+  function renderFlashcards(category) {
+    const container = document.getElementById('flashcardsContainer');
+    if (!container) return;
+    container.innerHTML = '';
+    (flashcardsData[category] || []).forEach(card => {
+      const cardDiv = document.createElement('div');
+      cardDiv.className = 'flashcard';
+      cardDiv.onclick = function() { this.classList.toggle('flipped'); };
+      cardDiv.innerHTML = `
+        <div class="flashcard-inner">
+          <div class="flashcard-front"><p>${card.front}</p></div>
+          <div class="flashcard-back"><p>${card.back}</p></div>
+        </div>
+      `;
+      container.appendChild(cardDiv);
+    });
+  }
+
+  // --- Progress and Courses ---
+  const totalCourses = 5;
+  let completedCourses = 0;
+  function completeCourse(idx) {
+    const btn = document.getElementById('course-btn-' + idx);
+    if (!btn.classList.contains('completed')) {
+      btn.textContent = 'Completed';
+      btn.classList.add('completed');
+      btn.disabled = true;
+      completedCourses++;
+      updateProgress();
+    }
+  }
+  function updateProgress() {
+    const percent = Math.round((completedCourses / totalCourses) * 100);
+    document.getElementById('progressBar').style.width = percent + '%';
+    document.getElementById('completedPercent').textContent = percent + '%';
+    document.getElementById('lessonsCount').textContent = completedCourses + '/' + totalCourses;
+  }
+  updateProgress();
+
+  // --- Daily Habit Checklist with Progress Bar ---
+  const habitCheckboxes = document.querySelectorAll('.habit-checkbox');
+  function updateHabitProgress() {
+    const checked = Array.from(habitCheckboxes).filter(cb => cb.checked).length;
+    const percent = Math.round((checked / habitCheckboxes.length) * 100);
+    document.getElementById('habitProgressBar').style.width = percent + '%';
+  }
+  habitCheckboxes.forEach(cb => cb.addEventListener('change', updateHabitProgress));
+  updateHabitProgress();
+
+  // --- Primary Flashcard Viewer with Flip Animation and Know/Don't Know Buttons ---
+  const primaryFlashcards = [
+    { front: "What is AI?", back: "Artificial Intelligence is the simulation of human intelligence in machines." },
+    { front: "Define Machine Learning", back: "Machine Learning is a subset of AI that enables machines to learn from data." },
+    { front: "What is Deep Learning?", back: "Deep Learning is a subset of ML that uses neural networks to analyze data." },
+    { front: "What is Business Ethics?", back: "Business ethics are moral principles that guide the way a business behaves." },
+    { front: "Who was the first President of the USA?", back: "George Washington." }
+  ];
+  let flashcardOrder = [...primaryFlashcards];
+  let flashcardKnown = [];
+  let flashcardDontKnow = [];
+  let flashcardCurrent = 0;
+  let flashcardFlipped = false;
+
+  function renderPrimaryFlashcard() {
+    if (!document.getElementById('primaryFlashcardFront')) return;
+    if (flashcardOrder.length === 0) {
+      document.getElementById('primaryFlashcardFront').innerHTML = "<b>All done!</b>";
+      document.getElementById('primaryFlashcardBack').innerHTML = `<b>Known: ${flashcardKnown.length} | Don't Know: ${flashcardDontKnow.length}</b>`;
+      document.getElementById('knowBtn').disabled = true;
+      document.getElementById('dontKnowBtn').disabled = true;
+      document.getElementById('flashcardProgress').textContent = "";
+      document.getElementById('primaryFlashcardInner').style.transform = "";
+      return;
+    }
+    const card = flashcardOrder[flashcardCurrent];
+    document.getElementById('primaryFlashcardFront').textContent = card.front;
+    document.getElementById('primaryFlashcardBack').textContent = card.back;
+    document.getElementById('knowBtn').disabled = false;
+    document.getElementById('dontKnowBtn').disabled = false;
+    document.getElementById('primaryFlashcardInner').style.transform = flashcardFlipped ? "rotateY(180deg)" : "";
+    document.getElementById('flashcardProgress').textContent =
+      `Card ${flashcardCurrent + 1} of ${flashcardOrder.length} | Known: ${flashcardKnown.length} | Don't Know: ${flashcardDontKnow.length}`;
+  }
+  if (document.getElementById('primaryFlashcard')) {
+    document.getElementById('primaryFlashcard').onclick = function() {
+      flashcardFlipped = !flashcardFlipped;
+      document.getElementById('primaryFlashcardInner').style.transform = flashcardFlipped ? "rotateY(180deg)" : "";
+    };
+    document.getElementById('knowBtn').onclick = function() {
+      flashcardKnown.push(flashcardOrder[flashcardCurrent]);
+      flashcardOrder.splice(flashcardCurrent, 1);
+      if (flashcardCurrent >= flashcardOrder.length) flashcardCurrent = 0;
+      flashcardFlipped = false;
+      renderPrimaryFlashcard();
+    };
+    document.getElementById('dontKnowBtn').onclick = function() {
+      flashcardDontKnow.push(flashcardOrder[flashcardCurrent]);
+      // Move to end for more practice
+      flashcardOrder.push(flashcardOrder[flashcardCurrent]);
+      flashcardOrder.splice(flashcardCurrent, 1);
+      if (flashcardCurrent >= flashcardOrder.length) flashcardCurrent = 0;
+      flashcardFlipped = false;
+      renderPrimaryFlashcard();
+    };
+    renderPrimaryFlashcard();
+  }
+
+  // --- Quiz App with Score and Retry ---
+  const quizData = [
+    {
+      question: "What is the capital of France?",
+      options: ["Paris", "London", "Berlin"],
+      answer: 0
+    },
+    {
+      question: "Which language runs in a web browser?",
+      options: ["Python", "Java", "JavaScript"],
+      answer: 2
+    },
+    {
+      question: "Who designed the first computer algorithm?",
+      options: ["Ada Lovelace", "Alan Turing", "Charles Babbage"],
+      answer: 0
+    }
+  ];
+  let quizIndex = 0;
+  let quizScore = 0;
+
+  function startQuiz() {
+    quizIndex = 0;
+    quizScore = 0;
+    document.getElementById('quizScore').textContent = '';
+    document.getElementById('retryBtn').style.display = 'none';
+    showQuizQuestion();
+  }
+  function showQuizQuestion() {
+    const q = quizData[quizIndex];
+    document.getElementById('quizQuestion').textContent = q.question;
+    const optionsDiv = document.getElementById('quizOptions');
+    optionsDiv.innerHTML = '';
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => selectQuizOption(i);
+      optionsDiv.appendChild(btn);
+    });
+  }
+  function selectQuizOption(selected) {
+    if (selected === quizData[quizIndex].answer) quizScore++;
+    quizIndex++;
+    if (quizIndex < quizData.length) {
+      showQuizQuestion();
+    } else {
+      document.getElementById('quizQuestion').textContent = 'Quiz Completed!';
+      document.getElementById('quizOptions').innerHTML = '';
+      document.getElementById('quizScore').textContent = 'Your Score: ' + quizScore + '/' + quizData.length;
+      document.getElementById('retryBtn').style.display = 'inline-block';
+    }
+  }
+  if (document.getElementById('quizQuestion')) startQuiz();
+
+  // --- Adaptive Quiz Logic ---
+  const adaptiveQuestions = [
+    // Easy
+    { q: "2 + 2 = ?", opts: ["3", "4", "5"], ans: 1, diff: "easy" },
+    { q: "What color is the sky on a clear day?", opts: ["Blue", "Green", "Red"], ans: 0, diff: "easy" },
+    // Medium
+    { q: "What is the capital of Germany?", opts: ["Berlin", "Paris", "Rome"], ans: 0, diff: "medium" },
+    { q: "Which planet is known as the Red Planet?", opts: ["Venus", "Mars", "Jupiter"], ans: 1, diff: "medium" },
+    // Hard
+    { q: "Who developed the theory of relativity?", opts: ["Newton", "Einstein", "Tesla"], ans: 1, diff: "hard" },
+    { q: "What is the derivative of x²?", opts: ["2x", "x", "x²"], ans: 0, diff: "hard" }
+  ];
+  let adaptivePool = [];
+  let adaptiveIndex = 0;
+  let adaptiveScore = 0;
+  let adaptiveDifficulty = "medium";
+  let adaptiveAsked = [];
+
+  function getAdaptivePool(diff) {
+    return adaptiveQuestions.filter(q => q.diff === diff && !adaptiveAsked.includes(q.q));
+  }
+  function startAdaptiveQuiz() {
+    adaptiveScore = 0;
+    adaptiveAsked = [];
+    adaptiveDifficulty = "medium";
+    adaptiveIndex = 0;
+    document.getElementById('adaptiveQuizScore').textContent = '';
+    document.getElementById('adaptiveRetryBtn').style.display = 'none';
+    nextAdaptiveQuestion();
+  }
+  function nextAdaptiveQuestion() {
+    const pool = getAdaptivePool(adaptiveDifficulty);
+    if (pool.length === 0) {
+      document.getElementById('adaptiveQuizQuestion').textContent = 'No more questions available in this difficulty.',
+      document.getElementById('adaptiveQuizOptions').innerHTML = '';
+      document.getElementById('adaptiveQuizScore').textContent = 'Your Score: ' + adaptiveScore;
+      document.getElementById('adaptiveRetryBtn').style.display = 'inline-block';
+      return;
+    }
+    const q = pool[Math.floor(Math.random() * pool.length)];
+    adaptiveAsked.push(q.q);
+    document.getElementById('adaptiveQuizQuestion').textContent = q.q;
+    const optionsDiv = document.getElementById('adaptiveQuizOptions');
+    optionsDiv.innerHTML = '';
+    q.opts.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.textContent = opt;
+      btn.onclick = () => selectAdaptiveOption(i, q.ans);
+      optionsDiv.appendChild(btn);
+    });
+  }
+  function selectAdaptiveOption(selected, correct) {
+    if (selected === correct) adaptiveScore++;
+    // Adjust difficulty based on performance
+    const q = adaptiveQuestions.find(quest => quest.q === adaptiveAsked[adaptiveAsked.length - 1]);
+    if (q) {
+      if (adaptiveScore / adaptiveAsked.length > 0.7) {
+        // Increase difficulty
+        if (q.diff === "easy") adaptiveDifficulty = "medium";
+        else if (q.diff === "medium") adaptiveDifficulty = "hard";
+      } else {
+        // Go easier if possible
+        if (q.diff === "hard") adaptiveDifficulty = "medium";
+        else if (q.diff === "medium") adaptiveDifficulty = "easy";
+      }
+    }
+    setTimeout(nextAdaptiveQuestion, 400);
+  }
+  if (document.getElementById('adaptiveQuizQuestion')) startAdaptiveQuiz();
+
+  // --- Course Catalog Data & Filter ---
+  const catalogData = [
+    { title: "JavaScript Basics", topic: "technology", time: "2h" },
+    { title: "UI/UX Design Principles", topic: "technology", time: "1.5h" },
+    { title: "Digital Marketing 101", topic: "technology", time: "2h" },
+    { title: "Business Ethics", topic: "ethics", time: "1h" },
+    { title: "World History Overview", topic: "history", time: "1.5h" }
+  ];
+  function renderCatalogTable(filter = "all") {
+    const tbody = document.querySelector("#catalogTable tbody");
+    tbody.innerHTML = "";
+    catalogData.filter(c => filter === "all" || c.topic === filter)
+      .forEach(c => {
+        const row = document.createElement("tr");
+        row.innerHTML = `<td style="padding:7px 6px;">${c.title}</td>
+          <td style="padding:7px 6px;text-transform:capitalize;">${c.topic}</td>
+          <td style="padding:7px 6px;">${c.time}</td>`;
+        tbody.appendChild(row);
+      });
+  }
+  if (document.getElementById("catalogFilter")) {
+    document.getElementById("catalogFilter").addEventListener("change", function() {
+      renderCatalogTable(this.value);
+    });
+    renderCatalogTable();
+  }
+
+  // --- Reading Log Data, Sort, and Star Ratings ---
+  let readingLog = [
+    { title: "Clean Code", date: "2025-05-10", rating: 5 },
+    { title: "AI for Beginners", date: "2025-05-12", rating: 4 },
+    { title: "History of Computing", date: "2025-05-14", rating: 3 }
+  ];
+  let readingSortKey = "date", readingSortAsc = false;
+  function renderReadingLogTable() {
+    const tbody = document.querySelector("#readingLogTable tbody");
+    tbody.innerHTML = "";
+    let sorted = [...readingLog].sort((a, b) => {
+      if (readingSortKey === "rating") return readingSortAsc ? a.rating - b.rating : b.rating - a.rating;
+      if (readingSortKey === "date") return readingSortAsc ? a.date.localeCompare(b.date) : b.date.localeCompare(a.date);
+      return readingSortAsc ? a.title.localeCompare(b.title) : b.title.localeCompare(a.title);
+    });
+    sorted.forEach(entry => {
+      tbody.innerHTML += `<tr>
+        <td style="padding:7px 6px;">${entry.title}</td>
+        <td style="padding:7px 6px;">${entry.date}</td>
+        <td style="padding:7px 6px;">${renderStars(entry.rating)}</td>
+      </tr>`;
+    });
+  }
+  function renderStars(rating) {
+    let stars = "";
+    for (let i = 1; i <= 5; i++) {
+      stars += '<i class="fa-star' + (i <= rating ? ' fas' : ' far') + '" style="color:#ffd700;"></i>';
+    }
+    return stars;
+  }
+  window.sortReadingLog = function(key) {
+    if (readingSortKey === key) readingSortAsc = !readingSortAsc;
+    else { readingSortKey = key; readingSortAsc = true; }
+    renderReadingLogTable();
+  }
+  renderReadingLogTable();
+
+  // --- Markdown Note Editor with Live Preview ---
+  function markdownToHtml(md) {
+    return md
+      .replace(/^### (.*$)/gim, '<h3>$1</h3>')
+      .replace(/^## (.*$)/gim, '<h2>$1</h2>')
+      .replace(/^# (.*$)/gim, '<h1>$1</h1>')
+      .replace(/\*\*(.*?)\*\*/gim, '<b>$1</b>')
+      .replace(/\*(.*?)\*/gim, '<i>$1</i>')
+      .replace(/`([^`]+)`/gim, '<code>$1</code>')
+      .replace(/\[([^\]]+)\]\(([^)]+)\)/gim, '<a href="$2" target="_blank">$1</a>')
+      .replace(/\n$/gim, '<br>')
+      .replace(/\n/g, '<br>');
+  }
+  if (document.getElementById("markdownInput")) {
+    const mdInput = document.getElementById("markdownInput");
+    const mdPreview = document.getElementById("markdownPreview");
+    mdInput.addEventListener("input", function() {
+      mdPreview.innerHTML = markdownToHtml(this.value);
+    });
+    mdPreview.innerHTML = markdownToHtml(mdInput.value || "# Welcome!\nType some Markdown notes here.");
+  }
+
+  // --- Interactive Video Player with Timestamp-Linked Comments ---
+  if (document.getElementById('interactiveVideo')) {
+    const video = document.getElementById('interactiveVideo');
+    const comments = [];
+    const commentsDiv = document.getElementById('videoComments');
+    const commentForm = document.getElementById('commentForm');
+    const commentText = document.getElementById('commentText');
+
+    function renderComments() {
+      commentsDiv.innerHTML = '';
+      comments.forEach((c, idx) => {
+        const span = document.createElement('span');
+        span.innerHTML = `<a href="#" style="color:#1e3a8a;text-decoration:underline;" onclick="seekTo(${c.time});return false;">[${formatTime(c.time)}]</a> ${escapeHtml(c.text)}`;
+        const div = document.createElement('div');
+        div.style.marginBottom = "4px";
+        div.appendChild(span);
+        commentsDiv.appendChild(div);
+      });
+    }
+    function formatTime(sec) {
+      const m = Math.floor(sec / 60);
+      const s = Math.floor(sec % 60);
+      return `${m}:${s.toString().padStart(2, '0')}`;
+    }
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    window.seekTo = function(time) {
+      video.currentTime = time;
+      video.play();
+    };
+    commentForm.onsubmit = function(e) {
+      e.preventDefault();
+      if (commentText.value.trim() === "") return;
+      comments.push({ time: Math.floor(video.currentTime), text: commentText.value });
+      commentText.value = "";
+      renderComments();
+    };
+    renderComments();
+  }
+
+  // --- Timeline-based Lesson Tracker with Drag-to-Reschedule ---
+  let lessons = [
+    { title: "Intro to JavaScript", date: "2025-05-17" },
+    { title: "UI/UX Basics", date: "2025-05-18" },
+    { title: "Digital Marketing", date: "2025-05-19" },
+    { title: "Business Ethics", date: "2025-05-20" },
+    { title: "World History", date: "2025-05-21" }
+  ];
+  function renderTimeline() {
+    const timeline = document.getElementById('lessonTimeline');
+    timeline.innerHTML = '';
+    lessons.forEach((lesson, idx) => {
+      const item = document.createElement('div');
+      item.className = 'timeline-item';
+      item.draggable = true;
+      item.style.background = '#f8faff';
+      item.style.borderRadius = '12px';
+      item.style.padding = '12px 18px';
+      item.style.minWidth = '140px';
+      item.style.boxShadow = '0 2px 8px rgba(30,58,138,0.06)';
+      item.style.textAlign = 'center';
+      item.style.cursor = 'grab';
+      item.style.border = '2px solid #ffd700';
+      item.style.userSelect = 'none';
+      item.innerHTML = `<b>${lesson.title}</b><br><span style="font-size:0.95em;color:#1e3a8a;">${lesson.date}</span>`;
+      item.ondragstart = e => {
+        e.dataTransfer.setData('text/plain', idx);
+        item.style.opacity = 0.5;
+      };
+      item.ondragend = () => { item.style.opacity = 1; };
+      item.ondragover = e => e.preventDefault();
+      item.ondrop = e => {
+        e.preventDefault();
+        const from = +e.dataTransfer.getData('text/plain');
+        const to = idx;
+        if (from !== to) {
+          const moved = lessons.splice(from, 1)[0];
+          lessons.splice(to, 0, moved);
+          renderTimeline();
+        }
+      };
+      timeline.appendChild(item);
+    });
+  }
+  renderTimeline();
+
+  // --- Spaced Repetition Flashcard Engine with Review Stats ---
+  let srFlashcards = [
+    { front: "What is a closure in JS?", back: "A closure is a function with preserved data from its lexical scope.", ef: 2.5, interval: 1, due: 0, reps: 0, last: null },
+    { front: "Define UX.", back: "User Experience, how a user interacts with and experiences a product.", ef: 2.5, interval: 1, due: 0, reps: 0, last: null },
+    { front: "What is SEO?", back: "Search Engine Optimization, improving site visibility in search engines.", ef: 2.5, interval: 1, due: 0, reps: 0, last: null }
+  ];
+  let srIndex = 0;
+  let srToday = 0;
+  function nextSRCard() {
+    // Find next due card (simulate today as 0)
+    srToday = 0;
+    srIndex = srFlashcards.findIndex(card => card.due <= srToday);
+    if (srIndex === -1) {
+      document.getElementById('srFlashcard').innerHTML = "<b>All reviews done for today!</b>";
+      document.getElementById('srStats').textContent = `Total cards: ${srFlashcards.length}`;
+      return;
+    }
+    const card = srFlashcards[srIndex];
+    document.getElementById('srFlashcard').innerHTML = `
+      <div style="font-size:1.1em;margin-bottom:8px;"><b>Q:</b> ${card.front}</div>
+      <button onclick="showSRBack()" style="background:#1e3a8a;color:#fff;border:none;border-radius:8px;padding:6px 16px;">Show Answer</button>
+      <div id="srBack" style="margin-top:10px;display:none;"><b>A:</b> ${card.back}</div>
+    `;
+  }
+  function showSRBack() {
+    document.getElementById('srBack').style.display = 'block';
+  }
+  function rateSRCard(rating) {
+    const card = srFlashcards[srIndex];
+    const ef = card.ef;
+    let interval = card.interval;
+    let due = card.due;
+    let reps = card.reps + 1;
+    if (rating === 2) {
+      // Easy
+      interval = interval * ef;
+      due = Math.floor(Date.now() / 1000) + interval * 24 * 60 * 60;
+    } else if (rating === 1) {
+      // Hard
+      due = Math.floor(Date.now() / 1000) + interval * 12 * 60 * 60;
+    } else {
+      // Again (reset)
+      reps = 0;
+      due = 0;
+    }
+    card.ef = Math.max(1.3, ef + (0.1 - (3 - rating) * 0.03));
+    card.interval = interval;
+    card.due = due;
+    card.reps = reps;
+    card.last = Math.floor(Date.now() / 1000);
+    nextSRCard();
+    renderSRStats();
+  }
+  function renderSRStats() {
+    const total = srFlashcards.length;
+    const due = srFlashcards.filter(card => card.due <= srToday).length;
+    const completed = srFlashcards.filter(card => card.reps > 0).length;
+    document.getElementById('srStats').innerHTML = `
+      Total cards: ${total} | Due today: ${due} | Completed: ${completed}
+    `;
+  }
+  renderSRStats();
+  nextSRCard();
+
+  // --- Study Success Chart ---
+  (function() {
+    const barHeights = [
+      40, 38, 35, 33, 30, 28, 28, 29, 31, 34, 38, 42, // Sep to Dec
+      48, 50, 52, 54, 55, 56, 56, 57, 58, 58, 58, 58  // Jan to Feb
+    ];
+    const chart = document.getElementById('studySuccessChart');
+    if (chart) {
+      barHeights.forEach(height => {
+        const bar = document.createElement('div');
+        bar.className = 'bar';
+        bar.style.width = '8px';
+        bar.style.backgroundColor = '#0077b6';
+        bar.style.borderRadius = '4px';
+        bar.style.transition = 'height 0.3s';
+        bar.style.height = `${height}px`;
+        chart.appendChild(bar);
+      });
+    }
+  })();
+  // Add minimal CSS for .bar if not present
+  const style = document.createElement('style');
+  style.textContent = `
+    .bar {
+      width: 8px;
+      background-color: #0077b6;
+      border-radius: 4px;
+      transition: height 0.3s;
+      display: inline-block;
+      margin-right: 2px;
+    }
+  `;
+  document.head.appendChild(style);
+  </script>
+</body>
+</html>
